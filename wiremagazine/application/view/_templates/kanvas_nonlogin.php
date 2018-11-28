@@ -11,5 +11,14 @@
             <button class="btn btn-default" onClick="window.location ='<?php echo URL; ?>login/index';">Login</button>            
             <button class="btn btn-default" onClick="window.location ='<?php echo URL; ?>login/register';">Daftar</button>
         </div>
-        
+        <div class="fh5co-menu">
+            <div class="fh5co-box">
+                <h3 class="heading">Pencarian</h3>
+                <form action="<?php echo URL; ?>home/index/" method="POST">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Cari Judul" name="key">
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>

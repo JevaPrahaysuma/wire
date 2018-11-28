@@ -5,6 +5,8 @@ class Postmodel
 	/**
 	 * @param object $db A PDO database connection
 	 */
+
+
 	function __construct($db)
 	{
 		try {
@@ -13,6 +15,15 @@ class Postmodel
 			exit('Database connection could not be established.');
 		}
 	}
+
+    public function searchPost($kunci){
+        $sql = "SELECT idPost, judulPost, isiPost, jenisPost, tanggalPost, alamatFoto FROM post WHERE statusPost = 'Valid' AND judulPost LIKE '%$kunci%' ORDER BY judulPost ASC";
+        $query = $this->db->prepare($sql);
+
+        $query->execute();
+
+        return $query->fetchAll();        
+    }
 
 	public function submit_post($judulPost, $isiPost, $alamatFoto, $idUser, $tanggalPost, $jenisPost){
 		$sql = "INSERT INTO post (judulPost, isiPost, statusPost, tanggalKadaluarsa, alamatFoto, idUser, tanggalPost, jenisPost) VALUES (:judulPost, :isiPost, :statusPost, :tanggalKadaluarsa, :alamatFoto, :idUser, :tanggalPost, :jenisPost)";

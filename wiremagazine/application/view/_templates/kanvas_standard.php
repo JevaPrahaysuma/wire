@@ -18,6 +18,15 @@
             <button class="btn btn-default" onClick="window.location ='<?php echo URL; ?>home/upgradeuser';">Upgrade</button>
 
             <button class="btn btn-default" onClick="window.location ='<?php echo URL; ?>logout/logout_user';">Keluar</button>
-
+            <div class="fh5co-menu">
+                <div class="fh5co-box">
+                    <h3 class="heading">Pencarian</h3>
+                    <form action="<?php echo URL; ?>home/index" method="POST">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Cari Judul" name="key">
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
