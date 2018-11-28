@@ -21,6 +21,15 @@
                     </div>
                      <div class="col-md-4">
                         <div class="thumbnail">
+                            <img src="<?php echo URL;?>images/comen.jpg" style ="width: 200px; height: 200px;" alt="...">
+                            <div class="caption">
+                                <p><center><a href="<?php echo URL;?>admin/viewallcomment" class="btn btn-primary" role="button">Lihat Semua Komentar</a> </center>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="col-md-4">
+                        <div class="thumbnail">
                             <img src="<?php echo URL;?>images/validasiuser.png" style ="width: 200px; height: 200px;" alt="...">
                             <div class="caption">
                                 <p><center><a href="<?php echo URL;?>admin/validateuser" class="btn btn-primary" role="button">Validasi User</a> </center>

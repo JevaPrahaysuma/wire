@@ -12,7 +12,7 @@ class Home extends Controller
                 unset($_SESSION["adminview"]);
         }
 
-       $sort = "";
+        $sort = "";
 
         if (isset($_GET["sort"])) {
             $posts = $this->postmodel->getSortPost($_GET["sort"]);
@@ -24,8 +24,6 @@ class Home extends Controller
         else{
             $posts = $this->postmodel->getAllPost();
         }
-
-
 
         
         if (isset($_SESSION["idUser"]) && isset($_SESSION["status"])){

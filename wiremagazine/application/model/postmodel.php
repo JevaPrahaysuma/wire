@@ -5,8 +5,6 @@ class Postmodel
 	/**
 	 * @param object $db A PDO database connection
 	 */
-
-
 	function __construct($db)
 	{
 		try {
@@ -15,39 +13,6 @@ class Postmodel
 			exit('Database connection could not be established.');
 		}
 	}
-
-    public function getSortPost($condition){
-        $query = null;
-        if ($condition == "Paling baru") {
-           $sql = "SELECT idPost, judulPost, isiPost, jenisPost, tanggalPost, alamatFoto FROM post WHERE statusPost = 'Valid' ORDER BY idPost DESC";
-           $query = $this->db->prepare($sql);
-           $query->execute();
-           $query = $query->fetchAll();
-        }  else if ($condition == "Alfabet") {
-           $sql = "SELECT idPost, judulPost, isiPost, jenisPost, tanggalPost, alamatFoto FROM post WHERE statusPost = 'Valid' ORDER BY judulPost ASC";
-           $query = $this->db->prepare($sql);
-           $query->execute();
-           $query = $query->fetchAll();
-        } else if ($condition == "Paling ramai") {
-           $sql = "SELECT a.idPost, a.judulPost, a.isiPost, a.jenisPost, a.tanggalPost, a.alamatFoto, COUNT(b.idKomentar) as Hitung FROM post a LEFT JOIN komentar b ON a.idPost = b.idPost WHERE statusPost = 'Valid' GROUP BY a.idPost, a.judulPost, a.isiPost, a.jenisPost, a.tanggalPost, a.alamatFoto ORDER BY Hitung DESC";
-           $query = $this->db->prepare($sql);
-           $query->execute();
-           $query = $query->fetchAll();
-       }
-        
-
-        return $query;        
-    }
-
-
-    public function searchPost($kunci){
-        $sql = "SELECT idPost, judulPost, isiPost, jenisPost, tanggalPost, alamatFoto FROM post WHERE statusPost = 'Valid' AND judulPost LIKE '%$kunci%' ORDER BY judulPost ASC";
-        $query = $this->db->prepare($sql);
-
-        $query->execute();
-
-        return $query->fetchAll();        
-    }
 
 	public function submit_post($judulPost, $isiPost, $alamatFoto, $idUser, $tanggalPost, $jenisPost){
 		$sql = "INSERT INTO post (judulPost, isiPost, statusPost, tanggalKadaluarsa, alamatFoto, idUser, tanggalPost, jenisPost) VALUES (:judulPost, :isiPost, :statusPost, :tanggalKadaluarsa, :alamatFoto, :idUser, :tanggalPost, :jenisPost)";
@@ -112,7 +77,6 @@ class Postmodel
         return $query->fetch()->total;
     }
 
-    
     public function sendcomment($idUser, $idPost, $isiKomentar){
         $sql = "INSERT INTO komentar (idUser, idPost, tanggalKomentar, isiKomentar) VALUES (:idUser, :idPost, :tanggalKomentar, :isiKomentar)";
 
@@ -182,15 +146,6 @@ class Postmodel
         return $query->fetch()->total;
     }
 
-    public function deletePost($idPost, $idUser){
-        $sql = "DELETE FROM post WHERE idPost = :idPost AND idUser = :idUser";
-
-        $query = $this->db->prepare($sql);
-        $parameters = array(':idUser' => $idUser, ':idPost' => $idPost);
-
-        $query->execute($parameters);
-    }
-
     public function getAllPost(){
          $sql = "SELECT idPost, judulPost, isiPost, jenisPost, tanggalPost, alamatFoto FROM post WHERE statusPost = 'Valid' ORDER BY idPost DESC";
         $query = $this->db->prepare($sql);
@@ -210,5 +165,35 @@ class Postmodel
     }
 
 
-   
+    public function getSortPost($condition){
+        $query = null;
+        if ($condition == "Paling baru") {
+           $sql = "SELECT idPost, judulPost, isiPost, jenisPost, tanggalPost, alamatFoto FROM post WHERE statusPost = 'Valid' ORDER BY idPost DESC";
+           $query = $this->db->prepare($sql);
+           $query->execute();
+           $query = $query->fetchAll();
+        }  else if ($condition == "Alfabet") {
+           $sql = "SELECT idPost, judulPost, isiPost, jenisPost, tanggalPost, alamatFoto FROM post WHERE statusPost = 'Valid' ORDER BY judulPost ASC";
+           $query = $this->db->prepare($sql);
+           $query->execute();
+           $query = $query->fetchAll();
+        } else if ($condition == "Paling ramai") {
+           $sql = "SELECT a.idPost, a.judulPost, a.isiPost, a.jenisPost, a.tanggalPost, a.alamatFoto, COUNT(b.idKomentar) as Hitung FROM post a LEFT JOIN komentar b ON a.idPost = b.idPost WHERE statusPost = 'Valid' GROUP BY a.idPost, a.judulPost, a.isiPost, a.jenisPost, a.tanggalPost, a.alamatFoto ORDER BY Hitung DESC";
+           $query = $this->db->prepare($sql);
+           $query->execute();
+           $query = $query->fetchAll();
+       }
+        
+
+        return $query;        
+    }
+
+    public function searchPost($kunci){
+        $sql = "SELECT idPost, judulPost, isiPost, jenisPost, tanggalPost, alamatFoto FROM post WHERE statusPost = 'Valid' AND judulPost LIKE '%$kunci%' ORDER BY judulPost ASC";
+        $query = $this->db->prepare($sql);
+
+        $query->execute();
+
+        return $query->fetchAll();        
+    }
 }

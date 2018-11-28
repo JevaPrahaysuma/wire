@@ -19,7 +19,40 @@
 						<p><?php echo nl2br($posts->isiPost)?></p>
 						</div>
                         
-                        
+                        <div class="col-lg-12 animate-box">
+							<p>Silahkan <a href="<?php echo URL; ?>login/index">Login</a> untuk mengomentari post, atau <a href="<?php echo URL; ?>login/register">Mendaftar</a> apabila tidak memiliki akun</p>
+						</div>
+						<div class="col-lg-12 animate-box">
+							<h3 class="heading">Comment Section</h3>
+							
+							 <table class="table table-hover" style="margin-top: 20px;">
+
+								    <tbody>
+								    	
+								    	<?php if(empty($comments)){
+								    		echo "Tidak ada komentar untuk post ini";
+								    	} else{
+								    	foreach($comments as $komen){?>
+								      <tr>
+								      	<td class="col-md-1">
+								      		<img src="<?php echo URL.$komen->alamatFoto ?>" alt="Image" class="img-responsive" style="height: 50px; width: 50px;">
+								      	</td>
+								        <td class="col-md-2">
+											<?php echo $komen->namaUser?>	
+											<br>
+											<p style="font-size: 11px;"> <?php echo $komen->status?> <br><?php echo $komen->tanggalKomentar?></p>
+										</td>
+								        <td class="col-md-8">
+								        	<?php echo nl2br($komen->isiKomentar);?>
+								    	</td>
+								    	<td class="col-md-1"></td>
+								    	<?php }}?>
+
+								    </tbody>
+								  </table>
+								  
+								</div>
+						</div>
 						
 				</div>
 

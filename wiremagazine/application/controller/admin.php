@@ -39,7 +39,15 @@ class Admin extends Controller
         require APP . 'view/_templates/footer_admin.php';
     }
 
-    
+    public function viewallcomment()
+    {
+        session_start();
+        $_SESSION["adminview"] = true;
+        $komens = $this->adminmodel->getAllComment();
+        require APP . 'view/_templates/header_admin.php';
+        require APP . 'view/admin/viewallcomment.php';
+        require APP . 'view/_templates/footer_admin.php';
+    }
 
     public function validatepost()
     {
@@ -101,7 +109,13 @@ class Admin extends Controller
         }
     }
 
-   
+    public function hapuskomentar(){
+        if (isset($_POST["hapuskomentar_click"])) {
+            $hapuskomentar = $this->adminmodel->deleteComment($_POST["idKomenHapus"]);
+         
+            header('location: ' . URL . 'admin/viewallcomment');
+        }
+    }
 
     public function terimauserreq(){
         if (isset($_POST["terimauserreq_click"])) {

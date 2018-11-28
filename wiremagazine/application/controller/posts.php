@@ -7,6 +7,7 @@ class Posts extends Controller
         session_start();
         if (isset($idPost)) {
             $posts = $this->postmodel->getPost($idPost);
+            $comments = $this->postmodel->getComment($idPost);
             $maxpost = $this->postmodel->getMaxPost();
 
             if (isset($_SESSION["idUser"]) && isset($_SESSION["status"])){
@@ -195,6 +196,7 @@ class Posts extends Controller
                 echo'<script>window.location="'.URL.'home/index";</script>';
             }
     }
+
     public function kirimeditkomentar(){
         if (isset($_POST["editkomentar_click"])) {
             $komentar = $this->postmodel->updateComment($_POST["idPost"], $_POST["idKomentar"], $_POST["idUser"], $_POST["isiKomentar"]);
@@ -202,6 +204,7 @@ class Posts extends Controller
             header('location: ' . URL . 'posts/index/'.$_POST["idPost"]);
         }
     }
+
     public function hapuskomentar(){
         if (isset($_POST["hapuskomentar_click"])) {
             $hapuskomentar = $this->postmodel->deleteComment($_POST["idPost"], $_POST["idKomentar"], $_POST["idUser"]);
@@ -293,7 +296,6 @@ class Posts extends Controller
         }
     }
 
-    
     public function lihatpost(){
         session_start();
 

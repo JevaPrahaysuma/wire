@@ -43,7 +43,24 @@
         $query->execute($parameters);
     }
 
-    
+    public function deleteComment($idKomentar){
+        $sql = "DELETE FROM komentar WHERE idKomentar = :idKomentar";
+
+        $query = $this->db->prepare($sql);
+        $parameters = array(':idKomentar' => $idKomentar);
+
+        $query->execute($parameters);
+    }
+
+    public function getAllComment(){
+        $sql = "SELECT b.tanggalKomentar, c.judulPost, a.namaUser, b.isiKomentar, b.idKomentar FROM user a, komentar b, post c WHERE a.idUser = b.idUser AND b.idPost = c.idPost ORDER BY b.tanggalKomentar ASC";
+        $query = $this->db->prepare($sql);
+
+        $query->execute();
+
+        return $query->fetchAll();        
+    }
+
     public function getAllPostRequest(){
     	$sql = "SELECT a.idPost, a.judulPost, a.isiPost, a.statusPost, a.tanggalKadaluarsa, a.jenisPost, a.tanggalPost, a.alamatFoto, b.namaUser FROM post a, user b WHERE a.idUser = b.idUser AND a.statusPost = 'Menunggu'";
         $query = $this->db->prepare($sql);
