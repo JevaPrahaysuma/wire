@@ -164,6 +164,52 @@ class Posts extends Controller
         }
     }
 
+    public function editkomentar(){
+        session_start();
+        if (isset($_SESSION["idUser"]) && isset($_SESSION["status"])){
+            if($_SESSION["idUser"] == $_POST["idUser"]){
+                $idUser = $_POST["idUser"];
+                $idPost = $_POST["idPost"];
+                $judulPost = $_POST["judulPost"];
+                $idKomentar = $_POST["idKomentar"];
+                $isiKomentar = $_POST["isiKomentar"];
+
+               if ($_SESSION["status"] == "Standard User") {
+                    require APP . 'view/_templates/header_user.php';
+                    require APP . 'view/_templates/kanvas_standard.php';
+                    require APP . 'view/posts/editkomentar.php';
+                    require APP . 'view/_templates/footer_user.php';
+               } else
+               {
+                    require APP . 'view/_templates/header_user.php';
+                    require APP . 'view/_templates/kanvas_trusted.php';
+                    require APP . 'view/posts/editkomentar.php';
+                    require APP . 'view/_templates/footer_user.php';
+               }  
+            } else
+            {
+                echo'<script>window.location="'.URL.'home/index";</script>';
+            }               
+            } else 
+            {
+                echo'<script>window.location="'.URL.'home/index";</script>';
+            }
+    }
+    public function kirimeditkomentar(){
+        if (isset($_POST["editkomentar_click"])) {
+            $komentar = $this->postmodel->updateComment($_POST["idPost"], $_POST["idKomentar"], $_POST["idUser"], $_POST["isiKomentar"]);
+         
+            header('location: ' . URL . 'posts/index/'.$_POST["idPost"]);
+        }
+    }
+    public function hapuskomentar(){
+        if (isset($_POST["hapuskomentar_click"])) {
+            $hapuskomentar = $this->postmodel->deleteComment($_POST["idPost"], $_POST["idKomentar"], $_POST["idUser"]);
+         
+            header('location: ' . URL . 'posts/index/'.$_POST["idPost"]);
+        }
+    }
+
     public function hapuspost(){
         if (isset($_POST["hapuspost_click"])) {
             $hapuspost = $this->postmodel->deletePost($_POST["idPostHapus"], $_POST["idUserHapus"]);
@@ -237,6 +283,16 @@ class Posts extends Controller
             echo'<script>window.location="'.URL.'home/index";</script>';
         }
     }
+    
+    public function komentaripost(){
+        session_start();
+        if (isset($_POST["komentar_click"])) {
+            $komentar = $this->postmodel->sendcomment($_SESSION["idUser"], $_POST["idPost"], $_POST["isiKomentar"]);
+         
+            header('location: ' . URL . 'posts/index/'.$_POST["idPost"]);
+        }
+    }
+
     
     public function lihatpost(){
         session_start();

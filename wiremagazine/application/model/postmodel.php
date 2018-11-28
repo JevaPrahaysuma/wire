@@ -112,6 +112,76 @@ class Postmodel
         return $query->fetch()->total;
     }
 
+    
+    public function sendcomment($idUser, $idPost, $isiKomentar){
+        $sql = "INSERT INTO komentar (idUser, idPost, tanggalKomentar, isiKomentar) VALUES (:idUser, :idPost, :tanggalKomentar, :isiKomentar)";
+
+        $tanggalKomentar = date("Y/m/d h:i:sa");
+
+        $query = $this->db->prepare($sql);
+        $parameters = array(':idUser' => $idUser, ':idPost' => $idPost, ':tanggalKomentar' => $tanggalKomentar, ':isiKomentar' => $isiKomentar);
+
+        $query->execute($parameters);
+    }
+
+    public function updateComment($idPost, $idKomentar, $idUser, $isiKomentar){
+        $sql = "UPDATE komentar SET isiKomentar = :isiKomentar WHERE idPost = :idPost AND idUser = :idUser AND idKomentar = :idKomentar";
+
+        $query = $this->db->prepare($sql);
+        $parameters = array(':idUser' => $idUser, ':idPost' => $idPost, ':isiKomentar' => $isiKomentar, ':idKomentar' => $idKomentar);
+
+        $query->execute($parameters);
+    }
+
+    public function deleteComment($idPost, $idKomentar, $idUser){
+        $sql = "DELETE FROM komentar WHERE idPost = :idPost AND idUser = :idUser AND idKomentar = :idKomentar";
+
+        $query = $this->db->prepare($sql);
+        $parameters = array(':idUser' => $idUser, ':idPost' => $idPost, ':idKomentar' => $idKomentar);
+
+        $query->execute($parameters);
+    }
+
+    public function deletePost($idPost, $idUser){
+        $sql = "DELETE FROM post WHERE idPost = :idPost AND idUser = :idUser";
+
+        $query = $this->db->prepare($sql);
+        $parameters = array(':idUser' => $idUser, ':idPost' => $idPost);
+
+        $query->execute($parameters);
+    }
+
+    public function getComment($idPost){
+        $sql = "SELECT a.idKomentar, a.idUser, a.tanggalKomentar, a.isiKomentar, b.namaUser, b.alamatFoto, b.status FROM komentar a, user b WHERE a.idUser = b.idUser AND a.idPost = :idPost ORDER BY a.tanggalKomentar ASC";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':idPost' => $idPost);
+
+        $query->execute($parameters);
+
+        return $query->fetchAll();
+    }
+
+    public function getCommentById($idKomentar){
+        $sql = "SELECT SELECT a.isiKomentar, b.judulPost FROM komentar a, post b WHERE a.idPost = b.idPost a.idKomentar = :idKomentar LIMIT 1";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':idKomentar' => $idKomentar);
+
+        $query->execute($parameters);
+
+        return $query->fetch();
+    }
+
+    public function getAmountOfComment($idPost)
+    {
+        $sql = "SELECT COUNT(a.idKomentar) AS total FROM komentar a, user b WHERE a.idUser = b.IdUser AND a.idPost = :idPost";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':idPost' => $idPost);
+        $query->execute($parameters);
+
+        // fetch() is the PDO method that get exactly one result
+        return $query->fetch()->total;
+    }
+
     public function deletePost($idPost, $idUser){
         $sql = "DELETE FROM post WHERE idPost = :idPost AND idUser = :idUser";
 
