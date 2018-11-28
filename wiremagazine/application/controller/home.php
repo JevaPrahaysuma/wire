@@ -12,13 +12,19 @@ class Home extends Controller
                 unset($_SESSION["adminview"]);
         }
 
-        if(isset($_POST["key"])){
+       $sort = "";
+
+        if (isset($_GET["sort"])) {
+            $posts = $this->postmodel->getSortPost($_GET["sort"]);
+            $sort = "- ".$_GET["sort"];
+        } else if(isset($_POST["key"])){
             $posts = $this->postmodel->searchPost($_POST["key"]);
             $sort = "- Pencarian keyword '".$_POST["key"]."'";
         }
         else{
             $posts = $this->postmodel->getAllPost();
         }
+
 
 
         

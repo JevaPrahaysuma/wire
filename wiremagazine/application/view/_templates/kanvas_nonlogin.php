@@ -20,5 +20,13 @@
                     </div>
                 </form>
             </div>
+            <div class="fh5co-box">
+                <h3 class="heading">Urutkan</h3>
+                <ul>
+                    <li><a href="<?php echo URL; ?>home/index/?sort=Alfabet">Alfabet</a></li>
+                    <li><a href="<?php echo URL; ?>home/index/?sort=Paling baru">Paling baru</a></li>
+                    <li><a href="<?php echo URL; ?>home/index/?sort=Paling ramai">Paling ramai</a></li>
+                </ul>
+            </div>
         </div>
     </div>

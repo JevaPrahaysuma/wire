@@ -6,7 +6,7 @@
 					<div class="row">
 						<div class="col-lg-12 cp-r animate-box">
 						<div class="col-lg-12 animate-box">
-
+							<h3 class="heading">Kumpulan post <?php echo $sort;?></h3>
 							 <table class="table table-hover" style="margin-top: 20px;">
 								    <tbody>	    	
 								    	<?php if(empty($posts)){

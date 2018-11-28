@@ -22,6 +22,12 @@
 
         </div>
         <div class="fh5co-menu">
+            <h3 class="heading">Urutkan Post</h3>
+                <ul>
+                    <li><a href="<?php echo URL; ?>home/index/?sort=Alfabet">Alfabet</a></li>
+                    <li><a href="<?php echo URL; ?>home/index/?sort=Paling baru">Paling baru</a></li>
+                    <li><a href="<?php echo URL; ?>home/index/?sort=Paling ramai">Paling ramai</a></li>
+                </ul>
             <div class="fh5co-box">
                 <h3 class="heading">Pencarian</h3>
                 <form action="<?php echo URL; ?>home/index/" method="POST">

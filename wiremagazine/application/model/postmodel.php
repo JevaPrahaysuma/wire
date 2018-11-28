@@ -16,6 +16,30 @@ class Postmodel
 		}
 	}
 
+    public function getSortPost($condition){
+        $query = null;
+        if ($condition == "Paling baru") {
+           $sql = "SELECT idPost, judulPost, isiPost, jenisPost, tanggalPost, alamatFoto FROM post WHERE statusPost = 'Valid' ORDER BY idPost DESC";
+           $query = $this->db->prepare($sql);
+           $query->execute();
+           $query = $query->fetchAll();
+        }  else if ($condition == "Alfabet") {
+           $sql = "SELECT idPost, judulPost, isiPost, jenisPost, tanggalPost, alamatFoto FROM post WHERE statusPost = 'Valid' ORDER BY judulPost ASC";
+           $query = $this->db->prepare($sql);
+           $query->execute();
+           $query = $query->fetchAll();
+        } else if ($condition == "Paling ramai") {
+           $sql = "SELECT a.idPost, a.judulPost, a.isiPost, a.jenisPost, a.tanggalPost, a.alamatFoto, COUNT(b.idKomentar) as Hitung FROM post a LEFT JOIN komentar b ON a.idPost = b.idPost WHERE statusPost = 'Valid' GROUP BY a.idPost, a.judulPost, a.isiPost, a.jenisPost, a.tanggalPost, a.alamatFoto ORDER BY Hitung DESC";
+           $query = $this->db->prepare($sql);
+           $query->execute();
+           $query = $query->fetchAll();
+       }
+        
+
+        return $query;        
+    }
+
+
     public function searchPost($kunci){
         $sql = "SELECT idPost, judulPost, isiPost, jenisPost, tanggalPost, alamatFoto FROM post WHERE statusPost = 'Valid' AND judulPost LIKE '%$kunci%' ORDER BY judulPost ASC";
         $query = $this->db->prepare($sql);
